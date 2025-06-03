@@ -142,6 +142,7 @@
   - All endpoints enforce correct access control.
   - Sensitive actions are logged for auditing.
 - **Notes:** Use decorators/middleware for DRY access control.
+- **Status:** ✅ Completed
 
 ---
 
@@ -159,6 +160,7 @@
   - Invalid input is rejected with clear messages.
   - API docs are up-to-date.
 - **Notes:** Use libraries like pydantic, marshmallow, or DRF serializers for validation.
+- **Status:** ✅ Completed
 
 ---
 
@@ -175,5 +177,6 @@
   - All critical paths are tested.
   - CI/CD runs on push/PR.
 - **Notes:** Use pytest, coverage, and preferred CI tool.
+- **Status:** ✅ Completed
 
 ---

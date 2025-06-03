@@ -1,4 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request, HTTPException
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
 from app.api.users import router as auth_router
 from app.api.memberships import router as memberships_router
 from app.api.content import router as content_router
@@ -49,6 +51,29 @@ app.include_router(audit_logs_router, prefix="/api")
 @app.get("/")
 def root():
     return {"message": "Welcome to Zerostack Platform API"}
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "status": "error",
+            "code": exc.status_code,
+            "message": exc.detail,
+        },
+    )
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={
+            "status": "error",
+            "code": 422,
+            "message": "Validation error",
+            "details": exc.errors(),
+        },
+    )
 
 register_tortoise(
     app,
