@@ -7,3 +7,5 @@ PyJWT
 python-dotenv
 aiosqlite 
 pydantic-settings
+asyncpg
+aerich

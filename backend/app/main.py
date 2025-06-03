@@ -19,9 +19,14 @@ app.include_router(founders_router, prefix="/api")
 def root():
     return {"message": "Welcome to Zerostack Platform API"}
 
+db_url = (
+    f"postgres://{settings.POSTGRES_USER}:{settings.POSTGRES_PASSWORD}"
+    f"@{settings.POSTGRES_HOST}:{settings.POSTGRES_PORT}/{settings.POSTGRES_DB}"
+)
+
 register_tortoise(
     app,
-    db_url="sqlite://db.sqlite3",  # Replace with your DB URL
+    db_url=db_url,
     modules={"models": [
         "app.models.user",
         "app.models.membership",
