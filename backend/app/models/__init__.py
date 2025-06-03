@@ -1,3 +1,5 @@
 from .user import User
 from .membership import Membership
-from .content import Content 
+from .content import Content
+from .intern import InternProfile
+from .founder import FounderProfile 

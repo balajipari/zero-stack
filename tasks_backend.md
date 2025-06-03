@@ -62,6 +62,7 @@
   - Intern and founder profiles can be retrieved.
   - Star intern listing works for founders.
 - **Notes:** Enforce access control for founders viewing intern details.
+- **Status:** ✅ Completed
 
 ---
 
