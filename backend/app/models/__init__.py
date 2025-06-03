@@ -9,4 +9,5 @@ from .course_membership import CourseMembership
 from .event import Event
 from .event_registration import EventRegistration
 from .meetup import Meetup
-from .meetup_photo import MeetupPhoto 
+from .meetup_photo import MeetupPhoto
+from .audit_log import AuditLog 
