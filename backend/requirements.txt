@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+passlib[bcrypt]
+tortoise-orm
+pydantic[email]
+PyJWT
+python-dotenv
+aiosqlite 
+pydantic-settings

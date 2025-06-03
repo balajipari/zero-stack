@@ -1,34 +1,37 @@
-/.venv
+/backend/venv/*
+/backend/.venv
+.venv
 # Python
-__pycache__/
+/backend/__pycache__/
+/backend/**/__pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
+/backend/.Python
+/backend/build/
+/backend/develop-eggs/
+/backend/dist/
+/backend/downloads/
+/backend/eggs/
+/backend/.eggs/
+/backend/lib/
+/backend/lib64/
+/backend/parts/
+/backend/sdist/
+/backend/var/
+/backend/wheels/
+/backend/*.egg-info/
+/backend/.installed.cfg
+/backend/*.egg
 
 # FastAPI
-.env
-.env.*
+/backend/.env
+/backend/.env.*
 
 # Database
-*.sqlite
-*.sqlite3
-*.db
+/backend/*.sqlite
+/backend/*.sqlite3
+/backend/*.db
 
 # IDE
 .idea/
@@ -38,16 +41,16 @@ wheels/
 .DS_Store
 
 # Logs
-*.log
-logs/
+/backend/*.log
+/backend/logs/
 
 # Coverage
-.coverage
-coverage.xml
-htmlcov/
+/backend/.coverage
+/backend/coverage.xml
+/backend/htmlcov/
 
 # mypy
-.mypy_cache/
+/backend/.mypy_cache/
 
 # pytest
-.pytest_cache/
+/backend/.pytest_cache/
