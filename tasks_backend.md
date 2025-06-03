@@ -78,6 +78,7 @@
   - Courses and cohorts can be created/managed by SuperAdmin.
   - Users can view and enroll in courses/cohorts as per membership.
 - **Notes:** Enforce accessible_memberships logic for course access.
+- **Status:** ✅ Completed
 
 ---
 

@@ -2,4 +2,7 @@ from .user import User
 from .membership import Membership
 from .content import Content
 from .intern import InternProfile
-from .founder import FounderProfile 
+from .founder import FounderProfile
+from .course import Course
+from .cohort import Cohort
+from .course_membership import CourseMembership 
