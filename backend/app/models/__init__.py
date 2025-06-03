@@ -7,4 +7,6 @@ from .course import Course
 from .cohort import Cohort
 from .course_membership import CourseMembership
 from .event import Event
-from .event_registration import EventRegistration 
+from .event_registration import EventRegistration
+from .meetup import Meetup
+from .meetup_photo import MeetupPhoto 

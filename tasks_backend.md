@@ -96,6 +96,7 @@
   - Events can be created/managed by SuperAdmin.
   - Users can view/register for events as per membership and event rules.
 - **Notes:** Handle payment_required and accessible_memberships logic.
+- **Status:** ✅ Completed
 
 ---
 
@@ -111,6 +112,7 @@
   - Meetups and photos can be created/managed by SuperAdmin.
   - Public can view meetups and galleries.
 - **Notes:** Use multipart/form-data for photo uploads.
+- **Status:** ✅ Completed
 
 ---
 
