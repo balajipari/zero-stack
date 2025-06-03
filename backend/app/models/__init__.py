@@ -5,4 +5,6 @@ from .intern import InternProfile
 from .founder import FounderProfile
 from .course import Course
 from .cohort import Cohort
-from .course_membership import CourseMembership 
+from .course_membership import CourseMembership
+from .event import Event
+from .event_registration import EventRegistration 

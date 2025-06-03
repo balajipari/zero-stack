@@ -1,5 +1,7 @@
 # Backend Implementation Task List (Zerostack)
 
+# NOTE: After completing each task, always mark it as completed and provide a commit message summarizing the changes.
+
 ---
 
 ## BE-001: User Authentication & Management
