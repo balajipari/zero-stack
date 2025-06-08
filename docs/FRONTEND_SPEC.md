@@ -2,12 +2,12 @@
 
 ## Overall Purpose and Proposed Tech Stack
 
-The Zerostack frontend will deliver a modern, responsive, and accessible user experience for aspiring tech/product builders, founders, interns, and SuperAdmins. The application will be built using:
+Zerostack's frontend delivers a modern, accessible, and responsive experience for aspiring tech/product builders, founders, interns, and SuperAdmins. The application will be built using:
 - **React** (functional components, hooks)
 - **Redux** (for global state management)
 - **React Query** (for API data fetching, caching, and mutations)
-- **Tailwind CSS** (for utility-first, responsive styling)
-- **React Router** (for client-side routing)
+- **Tailwind CSS** (utility-first, responsive styling)
+- **React Router** (client-side routing)
 
 ---
 
@@ -28,11 +28,11 @@ The Zerostack frontend will deliver a modern, responsive, and accessible user ex
 7. **Meetups**
    - Meetup list, meetup detail, photo gallery.
 8. **Intern Marketplace**
-   - Star intern list, intern profile detail (for founders), application/hiring flow (founder only).
+   - Star intern list, intern profile detail (for founders), hiring flow (founder only).
 9. **Membership Management**
    - View/upgrade/downgrade/cancel membership, membership status.
 10. **Admin/SuperAdmin Dashboard**
-    - User management, membership management, content moderation, event/meetup/course creation and management, analytics.
+    - User, membership, content, event, meetup, and course management; analytics.
 11. **Profile & Settings**
     - User profile view/edit, password change, notification preferences.
 12. **Error Pages**
@@ -44,19 +44,19 @@ The Zerostack frontend will deliver a modern, responsive, and accessible user ex
 
 - **Button**
   - Props: `type`, `variant`, `onClick`, `disabled`, `children`
-  - Behavior: Accessible, keyboard navigable, loading state
+  - Accessible, keyboard navigable, loading state
 - **Card**
   - Props: `title`, `description`, `image`, `actions`, `children`
-  - Behavior: Used for content previews, course/event/intern cards
+  - Used for content previews, course/event/intern cards
 - **Modal**
   - Props: `isOpen`, `onClose`, `title`, `children`, `footer`
-  - Behavior: Focus trap, accessible, dismiss on overlay click/esc
+  - Focus trap, accessible, dismiss on overlay click/esc
 - **UserForm**
   - Props: `initialValues`, `onSubmit`, `fields`, `submitLabel`
-  - Behavior: Used for registration, profile edit, admin user management
+  - Used for registration, profile edit, admin user management
 - **ContentList**
   - Props: `items`, `type`, `onSelect`, `pagination`
-  - Behavior: List of blogs, podcasts, case studies
+  - List of blogs, podcasts, case studies
 - **CourseCard / EventCard / MeetupCard**
   - Props: `data`, `onClick`, `actions`
 - **MembershipStatus**
@@ -78,33 +78,59 @@ The Zerostack frontend will deliver a modern, responsive, and accessible user ex
 
 ## State Management Strategy
 
-- **Redux** for global state: user authentication, user profile, membership status, notifications, theme.
-- **React Query** for server state: fetching, caching, and updating API data (users, content, courses, events, etc.).
+- **Redux** for global state: authentication, user profile, membership status, notifications, theme, and role-based access.
+- **React Query** for server state: fetching, caching, and updating API data (users, content, courses, events, meetups, interns, memberships, etc.).
 - **Local state** (React useState/useReducer) for form inputs, modal visibility, UI toggles.
-- **Optimistic updates** for actions like event registration, membership changes, and content moderation.
+- **Optimistic updates** for actions like event registration, membership changes, and content moderation, with rollback on error.
 
 ---
 
 ## API Integration (Screen/Component Mapping)
 
-- **Auth Pages:** `/users`, `/users/{id}` (register, login, profile fetch)
-- **Content Hub:** `/content`, `/content/{id}` (list, detail)
-- **Courses:** `/courses`, `/courses/{id}`, `/courses/{id}/enroll`, `/courses/{course_id}/cohorts`
-- **Events:** `/events`, `/events/{id}`, `/events/{id}/register`
-- **Meetups:** `/meetups`, `/meetups/{id}`, `/meetups/{id}/photos` (list, detail, upload)
-- **Intern Marketplace:** `/interns?is_listed=true`, `/interns/{user_id}`
-- **Membership Management:** `/users/{user_id}/memberships`, `/memberships` (CRUD)
-- **Admin/SuperAdmin Dashboard:** All endpoints for user, membership, content, event, course, and meetup management
-- **Profile & Settings:** `/users/{id}` (view/edit), `/users/{user_id}/memberships`
+- **Auth Pages:**
+  - `POST /users` (register)
+  - `GET /users/{id}` (profile fetch)
+  - `PATCH /users/{id}` (profile update)
+- **Content Hub:**
+  - `GET /content` (list)
+  - `GET /content/{id}` (detail)
+- **Courses:**
+  - `GET /courses` (catalog)
+  - `GET /courses/{id}` (detail)
+  - `POST /courses/{id}/enroll` (enrollment)
+  - `GET /courses/{course_id}/cohorts` (cohort selection)
+- **Events:**
+  - `GET /events` (listing)
+  - `GET /events/{id}` (detail)
+  - `POST /events/{id}/register` (registration/payment)
+- **Meetups:**
+  - `GET /meetups` (list)
+  - `GET /meetups/{id}` (detail)
+  - `GET /meetups/{id}/photos` (gallery)
+  - `POST /meetups/{id}/photos` (photo upload, SuperAdmin)
+- **Intern Marketplace:**
+  - `GET /interns?is_listed=true` (star intern list)
+  - `GET /interns/{user_id}` (intern profile)
+- **Membership Management:**
+  - `GET /users/{user_id}/memberships` (view)
+  - `POST /memberships` (create, SuperAdmin)
+  - `PATCH /memberships/{id}` (update, SuperAdmin)
+  - `DELETE /memberships/{id}` (cancel, SuperAdmin)
+- **Admin/SuperAdmin Dashboard:**
+  - All endpoints for user, membership, content, event, course, and meetup management
+- **Profile & Settings:**
+  - `GET /users/{id}` (view)
+  - `PATCH /users/{id}` (edit)
+  - `GET /users/{user_id}/memberships` (membership status)
 
 ---
 
 ## Data Input/Output
 
-- **Forms:** All forms use controlled components, client-side validation, and display server-side errors. Required fields are clearly marked.
-- **Data Display:** Use tables, cards, and lists for displaying collections. Detail pages for single resource views.
-- **User Interactions:** Accessible buttons, links, and modals. Confirmation dialogs for destructive actions. Inline feedback for actions (success/error).
-- **File Uploads:** For meetup photo uploads, use drag-and-drop or file picker, with progress indication.
+- **Forms:** Controlled components, client-side validation, display server-side errors, required fields marked, accessible labels.
+- **Data Display:** Use tables, cards, and lists for collections; detail pages for single resources.
+- **User Interactions:** Accessible buttons, links, and modals; confirmation dialogs for destructive actions; inline feedback for actions (success/error).
+- **File Uploads:** For meetup photo uploads, use drag-and-drop or file picker, with progress indication and error handling.
 
 ---
 
@@ -116,6 +142,7 @@ The Zerostack frontend will deliver a modern, responsive, and accessible user ex
 - **Accessibility:** All interactive elements are keyboard accessible, use semantic HTML, and meet WCAG 2.1 AA standards. Modals use focus trap. Forms have proper labels and ARIA attributes.
 - **Optimistic Updates:** For event registration, membership changes, and content moderation, update UI optimistically and roll back on error.
 - **Notifications:** Use Notification component for success, error, and info messages.
+- **Role-based UI:** Show/hide features and navigation based on user role (intern, founder, superadmin, etc.).
 
 ---
 
@@ -126,4 +153,4 @@ The Zerostack frontend will deliver a modern, responsive, and accessible user ex
 - **Protected Routes:** User Dashboard, Profile, Membership Management, Course Enrollment, Event Registration, Intern Marketplace.
 - **Admin/SuperAdmin Routes:** Dashboards and management screens for users, memberships, content, events, courses, meetups.
 - **Route Guards:** Use authentication and role-based guards to restrict access to protected/admin/superadmin routes.
-- **404/403/500 Error Pages:** Catch-all and error-specific routes for user-friendly error handling. 
+- **Error Pages:** 404/403/500 error pages as catch-all and for user-friendly error handling. 
