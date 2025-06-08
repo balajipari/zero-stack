@@ -47,6 +47,8 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
 #### FE-001-a: Set up routing for Landing Page
 - Add route for `/` or `/landing` in the app's router to render `Landing.tsx`.
 - **Dependencies:** FE-001
+- **Status:** ✅ COMPLETED
+  - React Router set up in App.tsx, route for '/' renders Landing page.
 
 #### FE-001-b: Integrate Landing Page component into route
 - Ensure the generated/manual component is rendered for the route.

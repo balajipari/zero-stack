@@ -1,4 +1,5 @@
 import React from 'react';
+import logo from '../assets/logo.png';
 
 const Landing: React.FC = () => {
   return (
@@ -13,12 +14,9 @@ const Landing: React.FC = () => {
         </nav>
       </header>
 
-      {/* Hero Section (Placeholder for Figma image/hero) */}
+      {/* Hero Section with Logo */}
       <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-16">
-        {/* TODO: Replace with Figma hero image/background */}
-        <div className="w-full max-w-4xl h-64 bg-gray-100 rounded-lg flex items-center justify-center mb-8">
-          <span className="text-2xl text-gray-400">[Hero Image/Illustration]</span>
-        </div>
+        <img src={logo} alt="Zerostack logo" className="w-40 h-40 mx-auto mb-8" />
         <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Welcome to ZeroStack</h1>
         <p className="text-lg md:text-xl text-gray-600 mb-8">The go-to platform for aspiring tech and product builders, founders, and interns.</p>
         <div className="flex flex-col md:flex-row gap-4 justify-center">
