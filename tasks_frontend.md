@@ -41,6 +41,8 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
   - Component matches Figma design
   - Responsive and accessible
   - All sections from Figma included
+- **Status:** ✅ COMPLETED
+  - Landing Page component created manually based on Figma structure, with Tailwind CSS and accessibility in mind.
 
 #### FE-001-a: Set up routing for Landing Page
 - Add route for `/` or `/landing` in the app's router to render `Landing.tsx`.
