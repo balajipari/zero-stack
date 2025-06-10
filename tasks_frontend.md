@@ -79,26 +79,48 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
 - **Acceptance Criteria:**
   - Component matches Figma design
   - Responsive and accessible
+- **Status:** ✅ COMPLETED
+  - Resources page implemented with Figma-inspired design, responsive layout, accessibility, API integration, and tests.
 
 #### FE-002-a: Set up routing for Resources Page
 - Add route for `/resources` in the app's router to render `Resources.tsx`.
 - **Dependencies:** FE-002
+- **Status:** ✅ COMPLETED
+  - Route added to App.tsx
 
 #### FE-002-b: Integrate Resources Page component into route
 - Ensure the generated/manual component is rendered for the route.
 - **Dependencies:** FE-002-a
+- **Status:** ✅ COMPLETED
+  - Component is rendered at /resources route
 
 #### FE-002-c: Add responsiveness and accessibility enhancements
 - Review and enhance the page for mobile/tablet/desktop and WCAG 2.1 AA compliance.
 - **Dependencies:** FE-002-b
+- **Status:** ✅ COMPLETED
+  - Implemented responsive grid layout for different screen sizes
+  - Added proper color contrast for accessibility
+  - Included semantic HTML structure
+  - Added hover states and transitions for better UX
+  - Implemented proper heading hierarchy
+  - Added descriptive text for all sections
 
 #### FE-002-d: Connect data and populate all sections
 - Populate all sections with static or dynamic data as per Figma.
 - **Dependencies:** FE-002-c
+- **Status:** ✅ COMPLETED
+  - Connected to API endpoints for dynamic content
+  - Loading and error states implemented
 
 #### FE-002-e: Write basic tests for rendering and accessibility
 - Use React Testing Library to test rendering and accessibility. Place tests in `frontend/tests/`.
 - **Dependencies:** FE-002-d
+- **Status:** ✅ COMPLETED
+  - Created Resources.test.tsx with comprehensive test coverage
+  - Tests for main heading, resource categories, featured resources
+  - Tests for navigation and resource category links
+  - Tests for call-to-action section
+  - Tests for proper routing and component rendering
 
 ---
 

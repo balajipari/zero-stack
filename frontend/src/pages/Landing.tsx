@@ -3,45 +3,56 @@ import logo from '../assets/logo.png';
 
 const Landing: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-[#FCFAF7] flex flex-col">
       {/* Header Navigation */}
-      <header className="w-full flex justify-end items-center px-8 py-4 bg-transparent">
-        <nav className="flex space-x-8 text-sm font-light">
-          <a href="/login" className="text-gray-600 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary">Member's Login</a>
-          <a href="/contact" className="text-gray-500 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary">Contact</a>
-          <a href="/write" className="text-gray-700 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary">Write for Us</a>
-          <a href="/about" className="text-gray-700 hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary">About</a>
+      <header className="w-full flex justify-end items-center px-12 py-8">
+        <nav className="flex space-x-10 text-base font-medium text-[#6D666F]">
+          <a href="/login" className="hover:text-[#1A223E] transition">Member's Login</a>
+          <a href="/contact" className="hover:text-[#1A223E] transition">Contact</a>
+          <a href="/write" className="hover:text-[#1A223E] transition">Write for Us</a>
+          <a href="/about" className="hover:text-[#1A223E] transition">About</a>
         </nav>
       </header>
 
-      {/* Hero Section with Logo */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-4 py-16">
-        <img src={logo} alt="Zerostack logo" className="w-40 h-40 mx-auto mb-8" />
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-900">Welcome to ZeroStack</h1>
-        <p className="text-lg md:text-xl text-gray-600 mb-8">The go-to platform for aspiring tech and product builders, founders, and interns.</p>
-        <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <a href="/resources" className="px-6 py-3 bg-primary text-white rounded-lg shadow hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-primary">Explore Resources</a>
-          <a href="/events" className="px-6 py-3 bg-white border border-primary text-primary rounded-lg shadow hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary">View Events</a>
+      {/* Hero Section */}
+      <section className="flex flex-col items-center justify-center text-center flex-1">
+        <img src={logo} alt="Zerostack logo" className="w-48 h-48 mb-8 drop-shadow-lg" />
+        <h1 className="text-5xl md:text-6xl font-extrabold text-[#232B36] mb-4">Welcome to ZeroStack</h1>
+        <p className="text-xl md:text-2xl text-[#6D666F] mb-10 max-w-2xl">
+          The go-to platform for aspiring tech and product builders, founders, and interns.
+        </p>
+        <div className="flex flex-col md:flex-row gap-4 justify-center mb-12">
+          <a
+            href="/resources"
+            className="px-8 py-3 bg-[#1A223E] text-white rounded-lg shadow hover:bg-[#23305A] transition font-semibold"
+          >
+            Explore Resources
+          </a>
+          <a
+            href="/events"
+            className="px-8 py-3 bg-white border border-[#1A223E] text-[#1A223E] rounded-lg shadow hover:bg-gray-100 transition font-semibold"
+          >
+            View Events
+          </a>
         </div>
       </section>
 
-      {/* Additional Sections (Placeholders for Figma groups/backgrounds) */}
-      <section className="w-full py-12 bg-gray-50 flex flex-col items-center">
-        {/* TODO: Replace with Figma content/sections */}
-        <div className="w-full max-w-5xl h-40 bg-gray-200 rounded mb-6 flex items-center justify-center">
-          <span className="text-lg text-gray-400">[Featured Content Section]</span>
+      {/* Featured Sections */}
+      <section className="w-full py-16 bg-[#F7F8FA] flex flex-col items-center">
+        <div className="w-full max-w-5xl h-40 bg-[#E5E7EB] rounded-xl mb-8 flex items-center justify-center text-xl text-[#6D666F] font-medium">
+          [Featured Content Section]
         </div>
-        <div className="w-full max-w-5xl h-40 bg-gray-200 rounded flex items-center justify-center">
-          <span className="text-lg text-gray-400">[More Content/Call to Action]</span>
+        <div className="w-full max-w-5xl h-40 bg-[#E5E7EB] rounded-xl flex items-center justify-center text-xl text-[#6D666F] font-medium">
+          [More Content/Call to Action]
         </div>
       </section>
 
-      {/* Footer (Optional) */}
-      <footer className="w-full py-6 text-center text-xs text-gray-400 bg-transparent">
+      {/* Footer */}
+      <footer className="w-full py-8 text-center text-sm text-[#6D666F] bg-transparent">
         &copy; {new Date().getFullYear()} ZeroStack. All rights reserved.
       </footer>
     </div>
   );
 };
 
-export default Landing; 
+export default Landing;
