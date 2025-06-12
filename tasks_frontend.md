@@ -468,6 +468,28 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
   - List and detail for meetups
   - Photo gallery with upload (SuperAdmin)
   - Loading, error, and success feedback
+  - Responsive and accessible
+- **Status:** ✅ COMPLETED
+
+#### FE-008-a: Meetup List Page
+- Implement meetup list page with API integration and responsive design.
+- **Status:** ✅ COMPLETED
+
+#### FE-008-b: Meetup Detail Page
+- Implement meetup detail page with photo gallery and API integration.
+- **Status:** ✅ COMPLETED
+
+#### FE-008-c: Photo Gallery Component
+- Implement photo gallery component for meetups.
+- **Status:** ✅ COMPLETED
+
+#### FE-008-d: File Upload Component
+- Implement file upload for SuperAdmin photo uploads.
+- **Status:** ✅ COMPLETED
+
+#### FE-008-e: Tests
+- Add tests for meetup list, detail, photo gallery, and file upload.
+- **Status:** ✅ COMPLETED
 
 ---
 
