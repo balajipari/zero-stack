@@ -9,6 +9,7 @@ import ContentList from './pages/content/ContentList';
 import ContentDetail from './pages/content/ContentDetail';
 import Podcasts from './pages/Podcasts';
 import ContactUs from './pages/ContactUs';
+import EventDetail from './pages/events/EventDetail';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Route path="/resources" element={<Resources />} />
         <Route path="/how-to-guides" element={<HowToGuides />} />
         <Route path="/events" element={<Events />} />
+        <Route path="/events/:id" element={<EventDetail />} />
         <Route path="/content" element={<ContentList />} />
         <Route path="/content/:id" element={<ContentDetail />} />
         <Route path="/podcasts" element={<Podcasts />} />

@@ -434,6 +434,24 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
   - Registration/payment flow
   - Membership-based access and pricing
   - Loading, error, and success feedback
+  - Responsive and accessible
+- **Status:** ✅ COMPLETED
+
+#### FE-007-a: Event List Page
+- Implement event list page with API integration and responsive design.
+- **Status:** ✅ COMPLETED
+
+#### FE-007-b: Event Detail Page
+- Implement event detail page with registration modal and API integration.
+- **Status:** ✅ COMPLETED
+
+#### FE-007-c: Registration Modal
+- Implement registration/payment modal with feedback and accessibility.
+- **Status:** ✅ COMPLETED
+
+#### FE-007-d: Tests
+- Add tests for event list, detail, and registration modal.
+- **Status:** ✅ COMPLETED
 
 ---
 
