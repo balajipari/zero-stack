@@ -1,35 +1,51 @@
+import axios from 'axios';
+
 export interface UserMembership {
-  id: string;
+  id: number;
   type: string;
   status: string;
-  renewal_date: string;
+  start_date: string;
+  end_date: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
-let mockMembership: UserMembership = {
-  id: '1',
-  type: 'growth',
-  status: 'active',
-  renewal_date: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
-};
+// Mock: Replace with real user ID and token from auth context
+const userId = 1;
+const token = 'mock-token';
 
 export const membershipService = {
-  async getMembership(): Promise<UserMembership> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return mockMembership;
+  async getMembership(): Promise<UserMembership | null> {
+    // Fetch memberships for the current user
+    const res = await axios.get(`/api/users/${userId}/memberships`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // Return the first (or only) membership for now
+    return res.data && res.data.length > 0 ? res.data[0] : null;
   },
-  async renewMembership(id: string): Promise<UserMembership> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    if (mockMembership.id !== id) throw new Error('Membership not found');
-    // Extend renewal date by 1 year
-    const newDate = new Date(mockMembership.renewal_date);
-    newDate.setFullYear(newDate.getFullYear() + 1);
-    mockMembership = {
-      ...mockMembership,
-      status: 'active',
-      renewal_date: newDate.toISOString(),
-    };
-    return mockMembership;
+  async renewMembership(id: number): Promise<UserMembership> {
+    // PATCH to update end_date (renew)
+    const res = await axios.patch(
+      `/api/memberships/${id}`,
+      { /* You may want to send a new end_date or just trigger renewal on backend */ },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
+  },
+  async updateMembership(id: number, data: Partial<UserMembership>): Promise<UserMembership> {
+    const res = await axios.patch(
+      `/api/memberships/${id}`,
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
+  },
+  async cancelMembership(id: number): Promise<UserMembership> {
+    const res = await axios.patch(
+      `/api/memberships/${id}`,
+      { status: 'cancelled' },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
   },
 }; 

@@ -1,96 +1,89 @@
+import axios from 'axios';
+
 export interface AdminMembership {
-  id: string;
-  user: string;
-  email: string;
+  id: number;
+  user_id: number;
   type: string;
   status: string;
-  renewal_date: string;
+  start_date: string;
+  end_date: string | null;
+  created_at: string;
+  updated_at: string;
+  user_name: string;
+  user_email: string;
 }
 
 export interface MembershipHistoryEntry {
-  id: string;
+  id: number;
   date: string;
   action: string;
   by: string;
   details: string;
 }
 
-const mockMemberships: AdminMembership[] = [
-  {
-    id: '1',
-    user: 'Alice Smith',
-    email: 'alice@example.com',
-    type: 'growth',
-    status: 'active',
-    renewal_date: '2024-12-01',
-  },
-  {
-    id: '2',
-    user: 'Bob Lee',
-    email: 'bob@example.com',
-    type: 'foundational',
-    status: 'cancelled',
-    renewal_date: '2024-06-01',
-  },
-  {
-    id: '3',
-    user: 'Carol Jones',
-    email: 'carol@example.com',
-    type: 'growth',
-    status: 'active',
-    renewal_date: '2024-09-15',
-  },
-];
-
-const mockHistory: Record<string, MembershipHistoryEntry[]> = {
-  '1': [
-    { id: 'h1', date: '2024-01-01', action: 'Created', by: 'System', details: 'Membership created.' },
-    { id: 'h2', date: '2024-03-01', action: 'Renewed', by: 'Alice Smith', details: 'Renewed for 1 year.' },
-    { id: 'h3', date: '2024-06-01', action: 'Type Changed', by: 'Admin', details: 'Upgraded to Growth.' },
-  ],
-  '2': [
-    { id: 'h4', date: '2023-05-01', action: 'Created', by: 'System', details: 'Membership created.' },
-    { id: 'h5', date: '2024-01-01', action: 'Cancelled', by: 'Bob Lee', details: 'Membership cancelled.' },
-  ],
-};
+const token = 'mock-token';
 
 export const adminMembershipService = {
   async getAllMemberships(): Promise<AdminMembership[]> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    return mockMemberships;
+    // Get all users
+    const usersRes = await axios.get('/api/admin/users/', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const users = usersRes.data;
+    // For each user, get memberships
+    const memberships: AdminMembership[] = [];
+    for (const user of users) {
+      const memRes = await axios.get(`/api/users/${user.id}/memberships`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      for (const m of memRes.data) {
+        memberships.push({
+          ...m,
+          user_name: user.name,
+          user_email: user.email,
+        });
+      }
+    }
+    return memberships;
   },
-  async updateMembership(id: string, data: Partial<AdminMembership>): Promise<AdminMembership> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const idx = mockMemberships.findIndex((m) => m.id === id);
-    if (idx === -1) throw new Error('Membership not found');
-    mockMemberships[idx] = { ...mockMemberships[idx], ...data };
-    return mockMemberships[idx];
+  async updateMembership(id: number, data: Partial<AdminMembership>): Promise<AdminMembership> {
+    const res = await axios.patch(
+      `/api/memberships/${id}`,
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
   },
-  async cancelMembership(id: string): Promise<AdminMembership> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const idx = mockMemberships.findIndex((m) => m.id === id);
-    if (idx === -1) throw new Error('Membership not found');
-    mockMemberships[idx].status = 'cancelled';
-    return mockMemberships[idx];
+  async cancelMembership(id: number): Promise<AdminMembership> {
+    const res = await axios.patch(
+      `/api/memberships/${id}`,
+      { status: 'cancelled' },
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
   },
-  async renewMembership(id: string): Promise<AdminMembership> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    const idx = mockMemberships.findIndex((m) => m.id === id);
-    if (idx === -1) throw new Error('Membership not found');
-    // Extend renewal date by 1 year
-    const newDate = new Date(mockMemberships[idx].renewal_date);
-    newDate.setFullYear(newDate.getFullYear() + 1);
-    mockMemberships[idx].renewal_date = newDate.toISOString();
-    mockMemberships[idx].status = 'active';
-    return mockMemberships[idx];
+  async renewMembership(id: number): Promise<AdminMembership> {
+    const res = await axios.patch(
+      `/api/memberships/${id}`,
+      {},
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+    return res.data;
   },
-  async getMembershipHistory(id: string): Promise<MembershipHistoryEntry[]> {
-    // Replace with real API call
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return mockHistory[id] || [];
+  async getMembershipHistory(id: number): Promise<MembershipHistoryEntry[]> {
+    // Use audit logs endpoint and filter by resource/resource_id
+    const res = await axios.get('/api/admin/audit-logs/', {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return (res.data as any[])
+      .filter((log) => log.resource === 'membership' && log.resource_id === id)
+      .map((log) => ({
+        id: log.id,
+        date: log.timestamp,
+        action: log.action,
+        by: log.user_id ? `User #${log.user_id}` : 'System',
+        details: log.details || '',
+      }));
   },
 }; 

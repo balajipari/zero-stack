@@ -1,16 +1,10 @@
 import React, { useState } from 'react';
 import { membershipService } from '../services/membershipService';
-
-interface Membership {
-  id: string;
-  type: string;
-  status: string;
-  renewal_date: string;
-}
+import type { UserMembership } from '../services/membershipService';
 
 interface MembershipStatusProps {
-  membership: Membership;
-  onChange: (membership: Membership) => void;
+  membership: UserMembership;
+  onChange: (membership: UserMembership) => void;
 }
 
 const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChange }) => {
@@ -26,19 +20,23 @@ const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChang
     setError(null);
     setSuccess(null);
     try {
-      const updated: Membership = { ...membership };
+      const data: Partial<UserMembership> = {};
       if (action === 'upgrade') {
-        updated.type = 'growth';
-        setSuccess('Membership upgraded!');
+        data.type = 'growth';
       } else if (action === 'downgrade') {
-        updated.type = 'foundational';
-        setSuccess('Membership downgraded!');
+        data.type = 'foundational';
       } else if (action === 'cancel') {
-        updated.status = 'cancelled';
-        setSuccess('Membership cancelled.');
+        data.status = 'cancelled';
       }
+      const updated = await membershipService.updateMembership(membership.id, data);
       onChange(updated);
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      setSuccess(
+        action === 'upgrade'
+          ? 'Membership upgraded!'
+          : action === 'downgrade'
+          ? 'Membership downgraded!'
+          : 'Membership cancelled.'
+      );
     } catch {
       setError('Action failed. Please try again.');
     } finally {
@@ -68,7 +66,8 @@ const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChang
       <div className="mb-4">
         <div className="text-lg font-semibold text-[#232B36] mb-2">Current Plan: {membership.type}</div>
         <div className="text-sm text-gray-500 mb-2">Status: {membership.status}</div>
-        <div className="text-sm text-gray-500 mb-2">Renewal Date: {new Date(membership.renewal_date).toLocaleDateString()}</div>
+        <div className="text-sm text-gray-500 mb-2">Start Date: {new Date(membership.start_date).toLocaleDateString()}</div>
+        <div className="text-sm text-gray-500 mb-2">End Date: {membership.end_date ? new Date(membership.end_date).toLocaleDateString() : 'N/A'}</div>
       </div>
       {error && <div className="text-red-600 mb-2">{error}</div>}
       {success && <div className="text-green-600 mb-2">{success}</div>}

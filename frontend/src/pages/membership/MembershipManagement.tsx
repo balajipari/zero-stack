@@ -10,10 +10,10 @@ const MembershipManagement: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all');
-  const [editId, setEditId] = useState<string | null>(null);
-  const [cancelId, setCancelId] = useState<string | null>(null);
-  const [renewId, setRenewId] = useState<string | null>(null);
-  const [historyId, setHistoryId] = useState<string | null>(null);
+  const [editId, setEditId] = useState<number | null>(null);
+  const [cancelId, setCancelId] = useState<number | null>(null);
+  const [renewId, setRenewId] = useState<number | null>(null);
+  const [historyId, setHistoryId] = useState<number | null>(null);
   const [history, setHistory] = useState<MembershipHistoryEntry[]>([]);
   const [historyLoading, setHistoryLoading] = useState(false);
   const [historyError, setHistoryError] = useState<string | null>(null);
@@ -40,8 +40,8 @@ const MembershipManagement: React.FC = () => {
 
   const filteredMemberships = memberships.filter((m) => {
     const matchesSearch =
-      m.user.toLowerCase().includes(search.toLowerCase()) ||
-      m.email.toLowerCase().includes(search.toLowerCase());
+      m.user_name.toLowerCase().includes(search.toLowerCase()) ||
+      m.user_email.toLowerCase().includes(search.toLowerCase());
     const matchesFilter = filter === 'all' || m.status === filter;
     return matchesSearch && matchesFilter;
   });
@@ -53,7 +53,7 @@ const MembershipManagement: React.FC = () => {
     setActionError(null);
   };
 
-  const openHistory = async (id: string) => {
+  const openHistory = async (id: number) => {
     setHistoryId(id);
     setHistory([]);
     setHistoryLoading(true);
@@ -69,12 +69,12 @@ const MembershipManagement: React.FC = () => {
   };
 
   const handleEdit = async () => {
-    if (!editId) return;
+    if (editId === null) return;
     setActionLoading(true);
     setActionError(null);
     try {
       const updated = await adminMembershipService.updateMembership(editId, { type: editType, status: editStatus });
-      setMemberships((prev) => prev.map((m) => (m.id === updated.id ? updated : m)));
+      setMemberships((prev) => prev.map((m) => (m.id === updated.id ? { ...updated, user_name: m.user_name, user_email: m.user_email } : m)));
       setEditId(null);
     } catch {
       setActionError('Failed to update membership.');
@@ -84,12 +84,12 @@ const MembershipManagement: React.FC = () => {
   };
 
   const handleCancel = async () => {
-    if (!cancelId) return;
+    if (cancelId === null) return;
     setActionLoading(true);
     setActionError(null);
     try {
       const updated = await adminMembershipService.cancelMembership(cancelId);
-      setMemberships((prev) => prev.map((m) => (m.id === updated.id ? updated : m)));
+      setMemberships((prev) => prev.map((m) => (m.id === updated.id ? { ...updated, user_name: m.user_name, user_email: m.user_email } : m)));
       setCancelId(null);
     } catch {
       setActionError('Failed to cancel membership.');
@@ -99,12 +99,12 @@ const MembershipManagement: React.FC = () => {
   };
 
   const handleRenew = async () => {
-    if (!renewId) return;
+    if (renewId === null) return;
     setActionLoading(true);
     setActionError(null);
     try {
       const updated = await adminMembershipService.renewMembership(renewId);
-      setMemberships((prev) => prev.map((m) => (m.id === updated.id ? updated : m)));
+      setMemberships((prev) => prev.map((m) => (m.id === updated.id ? { ...updated, user_name: m.user_name, user_email: m.user_email } : m)));
       setRenewId(null);
     } catch {
       setActionError('Failed to renew membership.');
@@ -114,8 +114,8 @@ const MembershipManagement: React.FC = () => {
   };
 
   const handleExport = () => {
-    const headers = ['User', 'Email', 'Type', 'Status', 'Renewal Date'];
-    const rows = filteredMemberships.map((m) => [m.user, m.email, m.type, m.status, m.renewal_date]);
+    const headers = ['User', 'Email', 'Type', 'Status', 'Start Date', 'End Date'];
+    const rows = filteredMemberships.map((m) => [m.user_name, m.user_email, m.type, m.status, m.start_date, m.end_date || '']);
     const csvContent = [headers, ...rows]
       .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
       .join('\n');
@@ -193,23 +193,25 @@ const MembershipManagement: React.FC = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Renewal Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredMemberships.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-6 py-4 text-center text-gray-400">No memberships found.</td>
+                    <td colSpan={7} className="px-6 py-4 text-center text-gray-400">No memberships found.</td>
                   </tr>
                 ) : (
                   filteredMemberships.map((m) => (
                     <tr key={m.id}>
-                      <td className="px-6 py-4 whitespace-nowrap">{m.user}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{m.email}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{m.user_name}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{m.user_email}</td>
                       <td className="px-6 py-4 whitespace-nowrap capitalize">{m.type}</td>
                       <td className="px-6 py-4 whitespace-nowrap capitalize">{m.status}</td>
-                      <td className="px-6 py-4 whitespace-nowrap">{m.renewal_date}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{new Date(m.start_date).toLocaleDateString()}</td>
+                      <td className="px-6 py-4 whitespace-nowrap">{m.end_date ? new Date(m.end_date).toLocaleDateString() : 'N/A'}</td>
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button
                           className="px-3 py-1 bg-blue-600 text-white rounded-lg text-sm font-semibold hover:bg-blue-700 transition mr-2"
@@ -247,7 +249,7 @@ const MembershipManagement: React.FC = () => {
         )}
 
         {/* Edit Modal */}
-        {editId && (
+        {editId !== null && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div className="bg-white rounded-xl p-8 shadow-lg w-full max-w-md">
               <h2 className="text-2xl font-bold mb-4">Edit Membership</h2>
@@ -294,62 +296,8 @@ const MembershipManagement: React.FC = () => {
           </div>
         )}
 
-        {/* Cancel Modal */}
-        {cancelId && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl p-8 shadow-lg w-full max-w-md">
-              <h2 className="text-2xl font-bold mb-4">Cancel Membership</h2>
-              <p className="mb-6">Are you sure you want to cancel this membership?</p>
-              {actionError && <div className="text-red-600 mb-2">{actionError}</div>}
-              <div className="flex justify-end gap-4 mt-6">
-                <button
-                  className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300"
-                  onClick={() => setCancelId(null)}
-                  disabled={actionLoading}
-                >
-                  No
-                </button>
-                <button
-                  className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 disabled:opacity-50"
-                  onClick={handleCancel}
-                  disabled={actionLoading}
-                >
-                  {actionLoading ? 'Cancelling...' : 'Yes, Cancel'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Renew Modal */}
-        {renewId && (
-          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
-            <div className="bg-white rounded-xl p-8 shadow-lg w-full max-w-md">
-              <h2 className="text-2xl font-bold mb-4">Renew Membership</h2>
-              <p className="mb-6">Are you sure you want to renew this membership for another year?</p>
-              {actionError && <div className="text-red-600 mb-2">{actionError}</div>}
-              <div className="flex justify-end gap-4 mt-6">
-                <button
-                  className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300"
-                  onClick={() => setRenewId(null)}
-                  disabled={actionLoading}
-                >
-                  No
-                </button>
-                <button
-                  className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 disabled:opacity-50"
-                  onClick={handleRenew}
-                  disabled={actionLoading}
-                >
-                  {actionLoading ? 'Renewing...' : 'Yes, Renew'}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* History Modal */}
-        {historyId && (
+        {historyId !== null && (
           <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
             <div className="bg-white rounded-xl p-8 shadow-lg w-full max-w-2xl">
               <h2 className="text-2xl font-bold mb-4">Membership History</h2>
@@ -389,6 +337,60 @@ const MembershipManagement: React.FC = () => {
                   onClick={() => setHistoryId(null)}
                 >
                   Close
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Renew Modal */}
+        {renewId !== null && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-8 shadow-lg w-full max-w-md">
+              <h2 className="text-2xl font-bold mb-4">Renew Membership</h2>
+              <p className="mb-6">Are you sure you want to renew this membership for another year?</p>
+              {actionError && <div className="text-red-600 mb-2">{actionError}</div>}
+              <div className="flex justify-end gap-4 mt-6">
+                <button
+                  className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300"
+                  onClick={() => setRenewId(null)}
+                  disabled={actionLoading}
+                >
+                  No
+                </button>
+                <button
+                  className="px-4 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 disabled:opacity-50"
+                  onClick={handleRenew}
+                  disabled={actionLoading}
+                >
+                  {actionLoading ? 'Renewing...' : 'Yes, Renew'}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Cancel Modal */}
+        {cancelId !== null && (
+          <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+            <div className="bg-white rounded-xl p-8 shadow-lg w-full max-w-md">
+              <h2 className="text-2xl font-bold mb-4">Cancel Membership</h2>
+              <p className="mb-6">Are you sure you want to cancel this membership?</p>
+              {actionError && <div className="text-red-600 mb-2">{actionError}</div>}
+              <div className="flex justify-end gap-4 mt-6">
+                <button
+                  className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold hover:bg-gray-300"
+                  onClick={() => setCancelId(null)}
+                  disabled={actionLoading}
+                >
+                  No
+                </button>
+                <button
+                  className="px-4 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 disabled:opacity-50"
+                  onClick={handleCancel}
+                  disabled={actionLoading}
+                >
+                  {actionLoading ? 'Cancelling...' : 'Yes, Cancel'}
                 </button>
               </div>
             </div>

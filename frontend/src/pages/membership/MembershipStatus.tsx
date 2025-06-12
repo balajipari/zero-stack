@@ -1,25 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../../assets/logo.png';
 import MembershipStatus from '../../components/MembershipStatus';
-
-interface Membership {
-  id: string;
-  type: string;
-  status: string;
-  renewal_date: string;
-}
+import { membershipService } from '../../services/membershipService';
+import type { UserMembership } from '../../services/membershipService';
 
 const MembershipStatusPage: React.FC = () => {
-  const [membership, setMembership] = useState<Membership | null>(null);
+  const [membership, setMembership] = useState<UserMembership | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMembership = async () => {
       try {
-        // Replace with real API call
-        const response = await fetch('/api/membership');
-        const data = await response.json();
+        const data = await membershipService.getMembership();
         setMembership(data);
       } catch {
         setError('Failed to load membership. Please try again later.');
