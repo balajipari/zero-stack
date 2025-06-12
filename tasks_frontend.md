@@ -135,26 +135,32 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
 - **Acceptance Criteria:**
   - Component matches Figma design
   - Responsive and accessible
+- **Status:** ✅ COMPLETED
 
 #### FE-003-a: Set up routing for How-to-Guides Page
 - Add route for `/how-to-guides` in the app's router to render `HowToGuides.tsx`.
 - **Dependencies:** FE-003
+- **Status:** ✅ COMPLETED
 
 #### FE-003-b: Integrate How-to-Guides Page component into route
 - Ensure the generated/manual component is rendered for the route.
 - **Dependencies:** FE-003-a
+- **Status:** ✅ COMPLETED
 
 #### FE-003-c: Add responsiveness and accessibility enhancements
 - Review and enhance the page for mobile/tablet/desktop and WCAG 2.1 AA compliance.
 - **Dependencies:** FE-003-b
+- **Status:** ✅ COMPLETED
 
 #### FE-003-d: Connect data and populate all sections
 - Populate all sections with static or dynamic data as per Figma.
 - **Dependencies:** FE-003-c
+- **Status:** ✅ COMPLETED
 
 #### FE-003-e: Write basic tests for rendering and accessibility
 - Use React Testing Library to test rendering and accessibility. Place tests in `frontend/tests/`.
 - **Dependencies:** FE-003-d
+- **Status:** ✅ COMPLETED
 
 ---
 
@@ -169,26 +175,32 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
 - **Acceptance Criteria:**
   - Component matches Figma design
   - Responsive and accessible
+- **Status:** ✅ COMPLETED
 
 #### FE-004-a: Set up routing for Events Page
 - Add route for `/events` in the app's router to render `Events.tsx`.
 - **Dependencies:** FE-004
+- **Status:** ✅ COMPLETED
 
 #### FE-004-b: Integrate Events Page component into route
 - Ensure the generated/manual component is rendered for the route.
 - **Dependencies:** FE-004-a
+- **Status:** ✅ COMPLETED
 
 #### FE-004-c: Add responsiveness and accessibility enhancements
 - Review and enhance the page for mobile/tablet/desktop and WCAG 2.1 AA compliance.
 - **Dependencies:** FE-004-b
+- **Status:** ✅ COMPLETED
 
 #### FE-004-d: Connect data and populate all sections
 - Populate all sections with static or dynamic data as per Figma.
 - **Dependencies:** FE-004-c
+- **Status:** ✅ COMPLETED
 
 #### FE-004-e: Write basic tests for rendering and accessibility
 - Use React Testing Library to test rendering and accessibility. Place tests in `frontend/tests/`.
 - **Dependencies:** FE-004-d
+- **Status:** ✅ COMPLETED
 
 ---
 
@@ -203,26 +215,32 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
 - **Acceptance Criteria:**
   - Component matches Figma design
   - Responsive and accessible
+- **Status:** ✅ COMPLETED
 
 #### FE-005-a: Set up routing for Podcasts Page
 - Add route for `/podcasts` in the app's router to render `Podcasts.tsx`.
 - **Dependencies:** FE-005
+- **Status:** ✅ COMPLETED
 
 #### FE-005-b: Integrate Podcasts Page component into route
 - Ensure the generated/manual component is rendered for the route.
 - **Dependencies:** FE-005-a
+- **Status:** ✅ COMPLETED
 
 #### FE-005-c: Add responsiveness and accessibility enhancements
 - Review and enhance the page for mobile/tablet/desktop and WCAG 2.1 AA compliance.
 - **Dependencies:** FE-005-b
+- **Status:** ✅ COMPLETED
 
 #### FE-005-d: Connect data and populate all sections
 - Populate all sections with static or dynamic data as per Figma.
 - **Dependencies:** FE-005-c
+- **Status:** ✅ COMPLETED
 
 #### FE-005-e: Write basic tests for rendering and accessibility
 - Use React Testing Library to test rendering and accessibility. Place tests in `frontend/tests/`.
 - **Dependencies:** FE-005-d
+- **Status:** ✅ COMPLETED
 
 ---
 
