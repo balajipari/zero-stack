@@ -8,6 +8,7 @@ import Events from './pages/Events';
 import ContentList from './pages/content/ContentList';
 import ContentDetail from './pages/content/ContentDetail';
 import Podcasts from './pages/Podcasts';
+import ContactUs from './pages/ContactUs';
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/content" element={<ContentList />} />
         <Route path="/content/:id" element={<ContentDetail />} />
         <Route path="/podcasts" element={<Podcasts />} />
+        <Route path="/contact" element={<ContactUs />} />
         {/* Add more routes here as needed */}
       </Routes>
     </BrowserRouter>

@@ -255,26 +255,32 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
 - **Acceptance Criteria:**
   - Component matches Figma design
   - Responsive and accessible
+- **Status:** ✅ COMPLETED
 
 #### FE-006-a: Set up routing for Contact-us Page
-- Add route for `/contact-us` in the app's router to render `ContactUs.tsx`.
+- Add route for `/contact` in the app's router to render `ContactUs.tsx`.
 - **Dependencies:** FE-006
+- **Status:** ✅ COMPLETED
 
 #### FE-006-b: Integrate Contact-us Page component into route
 - Ensure the generated/manual component is rendered for the route.
 - **Dependencies:** FE-006-a
+- **Status:** ✅ COMPLETED
 
 #### FE-006-c: Add responsiveness and accessibility enhancements
 - Review and enhance the page for mobile/tablet/desktop and WCAG 2.1 AA compliance.
 - **Dependencies:** FE-006-b
+- **Status:** ✅ COMPLETED
 
 #### FE-006-d: Connect data and populate all sections
 - Populate all sections with static or dynamic data as per Figma.
 - **Dependencies:** FE-006-c
+- **Status:** ✅ COMPLETED
 
 #### FE-006-e: Write basic tests for rendering and accessibility
 - Use React Testing Library to test rendering and accessibility. Place tests in `frontend/tests/`.
 - **Dependencies:** FE-006-d
+- **Status:** ✅ COMPLETED
 
 ---
 
