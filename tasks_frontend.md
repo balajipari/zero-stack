@@ -506,6 +506,24 @@ This is a living document. Tasks are grouped by page. Update as work progresses.
   - List and detail for star interns
   - Hiring flow for founders
   - Access control (founder only)
+  - Responsive and accessible
+- **Status:** ✅ COMPLETED
+
+#### FE-009-a: Intern List Page
+- Implement intern list page with API integration and responsive design.
+- **Status:** ✅ COMPLETED
+
+#### FE-009-b: Intern Profile Page
+- Implement intern profile page with hiring flow and API integration.
+- **Status:** ✅ COMPLETED
+
+#### FE-009-c: Intern Card Component
+- Implement intern card component for list display.
+- **Status:** ✅ COMPLETED
+
+#### FE-009-d: Tests
+- Add tests for intern list, profile, and hiring flow.
+- **Status:** ✅ COMPLETED
 
 ---
 

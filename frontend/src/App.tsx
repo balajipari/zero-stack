@@ -12,6 +12,8 @@ import ContactUs from './pages/ContactUs';
 import EventDetail from './pages/events/EventDetail';
 import MeetupList from './pages/meetups/MeetupList';
 import MeetupDetail from './pages/meetups/MeetupDetail';
+import InternList from './pages/interns/InternList';
+import InternProfile from './pages/interns/InternProfile';
 
 const App: React.FC = () => {
   return (
@@ -28,6 +30,8 @@ const App: React.FC = () => {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/meetups" element={<MeetupList />} />
         <Route path="/meetups/:id" element={<MeetupDetail />} />
+        <Route path="/interns" element={<InternList />} />
+        <Route path="/interns/:user_id" element={<InternProfile />} />
         {/* Add more routes here as needed */}
       </Routes>
     </BrowserRouter>
