@@ -17,6 +17,8 @@ import InternProfile from './pages/interns/InternProfile';
 import MembershipStatus from './pages/membership/MembershipStatus';
 import MembershipManagement from './pages/membership/MembershipManagement';
 import NotAuthorized from './pages/NotAuthorized';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import { UserProvider, useUser } from './context/UserContext';
 
 const ProtectedAdminRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -47,6 +49,8 @@ const App: React.FC = () => {
           <Route path="/interns/:user_id" element={<InternProfile />} />
           <Route path="/membership/status" element={<MembershipStatus />} />
           <Route path="/admin/memberships" element={<ProtectedAdminRoute><MembershipManagement /></ProtectedAdminRoute>} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           {/* Add more routes here as needed */}
         </Routes>
       </BrowserRouter>

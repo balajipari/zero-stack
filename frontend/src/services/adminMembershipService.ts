@@ -21,10 +21,8 @@ export interface MembershipHistoryEntry {
   details: string;
 }
 
-const token = 'mock-token';
-
 export const adminMembershipService = {
-  async getAllMemberships(): Promise<AdminMembership[]> {
+  async getAllMemberships(token: string): Promise<AdminMembership[]> {
     // Get all users
     const usersRes = await axios.get('/api/admin/users/', {
       headers: { Authorization: `Bearer ${token}` },
@@ -46,7 +44,7 @@ export const adminMembershipService = {
     }
     return memberships;
   },
-  async updateMembership(id: number, data: Partial<AdminMembership>): Promise<AdminMembership> {
+  async updateMembership(id: number, data: Partial<AdminMembership>, token: string): Promise<AdminMembership> {
     const res = await axios.patch(
       `/api/memberships/${id}`,
       data,
@@ -54,7 +52,7 @@ export const adminMembershipService = {
     );
     return res.data;
   },
-  async cancelMembership(id: number): Promise<AdminMembership> {
+  async cancelMembership(id: number, token: string): Promise<AdminMembership> {
     const res = await axios.patch(
       `/api/memberships/${id}`,
       { status: 'cancelled' },
@@ -62,7 +60,7 @@ export const adminMembershipService = {
     );
     return res.data;
   },
-  async renewMembership(id: number): Promise<AdminMembership> {
+  async renewMembership(id: number, token: string): Promise<AdminMembership> {
     const res = await axios.patch(
       `/api/memberships/${id}`,
       {},
@@ -70,7 +68,7 @@ export const adminMembershipService = {
     );
     return res.data;
   },
-  async getMembershipHistory(id: number): Promise<MembershipHistoryEntry[]> {
+  async getMembershipHistory(id: number, token: string): Promise<MembershipHistoryEntry[]> {
     // Use audit logs endpoint and filter by resource/resource_id
     const res = await axios.get('/api/admin/audit-logs/', {
       headers: { Authorization: `Bearer ${token}` },

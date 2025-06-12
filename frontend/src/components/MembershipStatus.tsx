@@ -5,9 +5,10 @@ import type { UserMembership } from '../services/membershipService';
 interface MembershipStatusProps {
   membership: UserMembership;
   onChange: (membership: UserMembership) => void;
+  token: string;
 }
 
-const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChange }) => {
+const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChange, token }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
@@ -28,7 +29,7 @@ const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChang
       } else if (action === 'cancel') {
         data.status = 'cancelled';
       }
-      const updated = await membershipService.updateMembership(membership.id, data);
+      const updated = await membershipService.updateMembership(membership.id, data, token);
       onChange(updated);
       setSuccess(
         action === 'upgrade'
@@ -48,7 +49,7 @@ const MembershipStatus: React.FC<MembershipStatusProps> = ({ membership, onChang
     setRenewLoading(true);
     setRenewError(null);
     try {
-      const updated = await membershipService.renewMembership(membership.id);
+      const updated = await membershipService.renewMembership(membership.id, token);
       onChange(updated);
       setSuccess('Membership renewed!');
       setRenewModal(false);

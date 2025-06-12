@@ -10,12 +10,8 @@ export interface UserMembership {
   updated_at: string;
 }
 
-// Mock: Replace with real user ID and token from auth context
-const userId = 1;
-const token = 'mock-token';
-
 export const membershipService = {
-  async getMembership(): Promise<UserMembership | null> {
+  async getMembership(userId: number, token: string): Promise<UserMembership | null> {
     // Fetch memberships for the current user
     const res = await axios.get(`/api/users/${userId}/memberships`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -23,7 +19,7 @@ export const membershipService = {
     // Return the first (or only) membership for now
     return res.data && res.data.length > 0 ? res.data[0] : null;
   },
-  async renewMembership(id: number): Promise<UserMembership> {
+  async renewMembership(id: number, token: string): Promise<UserMembership> {
     // PATCH to update end_date (renew)
     const res = await axios.patch(
       `/api/memberships/${id}`,
@@ -32,7 +28,7 @@ export const membershipService = {
     );
     return res.data;
   },
-  async updateMembership(id: number, data: Partial<UserMembership>): Promise<UserMembership> {
+  async updateMembership(id: number, data: Partial<UserMembership>, token: string): Promise<UserMembership> {
     const res = await axios.patch(
       `/api/memberships/${id}`,
       data,
@@ -40,7 +36,7 @@ export const membershipService = {
     );
     return res.data;
   },
-  async cancelMembership(id: number): Promise<UserMembership> {
+  async cancelMembership(id: number, token: string): Promise<UserMembership> {
     const res = await axios.patch(
       `/api/memberships/${id}`,
       { status: 'cancelled' },

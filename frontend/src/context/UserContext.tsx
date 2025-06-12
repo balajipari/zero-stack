@@ -1,18 +1,48 @@
-import React, { createContext, useContext } from 'react';
-
-export type UserRole = 'user' | 'admin' | 'superadmin';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { authService } from '../services/authService';
+import type { AuthUser } from '../services/authService';
+import type { ReactNode } from 'react';
 
 interface UserContextType {
-  role: UserRole;
+  user: AuthUser | null;
+  token: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  logout: () => void;
 }
 
-// Mock: set role to 'superadmin' for now. Change to 'user' to test unauthorized access.
-const UserContext = createContext<UserContextType>({ role: 'superadmin' });
+const UserContext = createContext<UserContextType>({
+  user: null,
+  token: null,
+  login: async () => {},
+  logout: () => {},
+});
 
 export const useUser = () => useContext(UserContext);
 
-export const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // In a real app, get role from auth/user API
-  const value: UserContextType = { role: 'superadmin' };
-  return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
+export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [user, setUser] = useState<AuthUser | null>(authService.getUser());
+  const [token, setToken] = useState<string | null>(authService.getToken());
+
+  useEffect(() => {
+    setUser(authService.getUser());
+    setToken(authService.getToken());
+  }, []);
+
+  const login = async (email: string, password: string) => {
+    const authUser = await authService.login(email, password);
+    setUser(authUser);
+    setToken(authUser.token);
+  };
+
+  const logout = () => {
+    authService.logout();
+    setUser(null);
+    setToken(null);
+  };
+
+  return (
+    <UserContext.Provider value={{ user, token, login, logout }}>
+      {children}
+    </UserContext.Provider>
+  );
 }; 
